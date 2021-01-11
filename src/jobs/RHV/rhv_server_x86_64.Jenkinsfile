@@ -15,7 +15,9 @@ properties([
 ])
 
 pipeline{
-    agent { label ("linchpin") }
+    agent {
+        label('linchpin')
+    }
     stages {
         stage('Preparation') {
             steps {
