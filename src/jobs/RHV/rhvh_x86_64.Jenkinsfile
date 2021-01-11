@@ -15,5 +15,24 @@ properties([
 ])
 
 pipeline{
-    load 'default.Jenkinsfile'
+    stages {
+        stage('Preparation') {
+            steps {
+                script {
+                    currentBuild.displayName = "#${{env.BUILD_ID}}-${{ERRATA_ID}}-${{CDN}}"
+                }
+                cleanWs()
+                dir( 'entitlement-tests' )
+                {
+                    checkout scm: [
+                        $class: 'GitSCM',
+                        extensions: [[$class: 'CleanCheckout']],
+                        userRemoteConfigs: [[credentialsId: 'gerrit-ftan',url: 'ssh://ftan@code.engineering.redhat.com/entitlement-tests']],
+                        branches: [[name: 'master']]
+                    ]
+                }
+                sh 'bash -x $WORKSPACE/entitlement-tests/CCI/scripts/RHV/rhv_defaults_preparation.sh'
+            }
+        }
+    }
 }
