@@ -25,7 +25,6 @@ jobConfig.each { jobName, config ->
                 resources(["beaker", "umb", "manifest-api"])
             }
         }
-        agent { label "linchpin" }
         environment {
             PROD_ACC = credentials('ent_prod_acc')
             STAGE_ACC = credentials('rhv_stage_acc')
