@@ -14,6 +14,7 @@ properties([
 params.each { k, v -> env[k] = v }
 
 pipeline{
+    agent any
     options{
         disableConcurrentBuilds()
         buildDiscarder( logRotator( daysToKeepStr: '30', numToKeepStr: '30', artifactDaysToKeepStr: '15', artifactNumToKeepStr: '15' ) )
