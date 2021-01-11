@@ -20,7 +20,7 @@ pipeline{
         buildDiscarder( logRotator( daysToKeepStr: '30', numToKeepStr: '30', artifactDaysToKeepStr: '15', artifactNumToKeepStr: '15' ) )
     }
     stages{
-        stage('Test 2'){
+        stage('Test 1'){
             steps{
                  sh 'echo  testing!!!!!!'
             }
