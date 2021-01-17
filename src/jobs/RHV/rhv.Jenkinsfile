@@ -1,5 +1,4 @@
 #!/usr/bin/env groovy
-package pipeline.scripts
 
 import com.redhat.jenkins.plugins.ci.messaging.MessagingProviderOverrides;
 MessagingProviderOverrides po = new MessagingProviderOverrides('Consumer.rh-jenkins-ci-plugin.cb8a05ac-493c-42ee-9529-0aa113fc35ba.VirtualTopic.qe.ci.>');
