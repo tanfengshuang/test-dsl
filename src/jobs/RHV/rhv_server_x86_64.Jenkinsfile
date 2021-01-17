@@ -18,6 +18,15 @@ pipeline {
     agent {
         label('linchpin')
     }
+    environment {
+        PROD_ACC = credentials('ent_prod_acc')
+        STAGE_ACC = credentials('rhv_stage_acc')
+    }
+    options {
+        timestamps()
+        ansiColor('xterm')
+        buildDiscarder(logRotator(numToKeepStr: '100', artifactNumToKeepStr: '-1'))
+    }
     stages {
         stage('Preparation') {
             steps {

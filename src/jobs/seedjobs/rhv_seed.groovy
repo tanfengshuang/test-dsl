@@ -25,20 +25,10 @@ jobConfig.each { jobName, config ->
                 resources(["beaker", "umb", "manifest-api"])
             }
         }
-        environment {
-            PROD_ACC = credentials('ent_prod_acc')
-            STAGE_ACC = credentials('rhv_stage_acc')
-        }
         throttleConcurrentBuilds {
             maxPerNode(3)
             maxTotal(0)
         }
-        options {
-            timestamps()
-            ansiColor('xterm')
-            buildDiscarder(logRotator(numToKeepStr: '100', artifactNumToKeepStr: '-1'))
-        }
-
         definition {
             cps {
                 script(readFileFromWorkspace(config['Jenkinsfile']))
