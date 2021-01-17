@@ -1,3 +1,4 @@
+default.Jenkinsfile
 
 properties([
     parameters([
@@ -10,7 +11,7 @@ properties([
         choice(name: 'CDN', choices: 'Stage\nProd', description: 'Select CDN, Stage or Prod.'),
         choice(name: 'Candlepin', choices: 'Stage\nProd', description: 'Select Candlepin, Stage or Prod.'),
         string(name: 'Testing_System', defaultValue: '', description: 'Optional, fill in the hostname or IP of one system which has correct RHV version and arch here, then will do testing on it rather than provison beaker system.'),
-        string(name: 'Password', defaultValue: 'QwAo2U6GRxyNPKiZaOCx', description: 'Optional, used for Testing_System, the default value above is beaker's default password, please modify it if needed, but please make sure correct password here.'),
+        string(name: 'Password', defaultValue: 'QwAo2U6GRxyNPKiZaOCx', description: "Optional, used for Testing_System, the default value above is beaker's default password, please modify it if needed, but please make sure correct password here."),
     ])
 ])
 
