@@ -1,5 +1,3 @@
-default.Jenkinsfile
-
 properties([
     parameters([
         string(name: 'ERRATA_ID', defaultValue: '', description: 'Set ERRATA_ID or Manifest_URL for manual trigger. Manifest_URL will take affect if both are set.'),
@@ -16,36 +14,10 @@ properties([
 ])
 
 pipeline {
-    agent {
-        label('linchpin')
-    }
-    environment {
-        PROD_ACC = credentials('ent_prod_acc')
-        STAGE_ACC = credentials('rhv_stage_acc')
-    }
-    options {
-        timestamps()
-        ansiColor('xterm')
-        buildDiscarder(logRotator(numToKeepStr: '100', artifactNumToKeepStr: '-1'))
-    }
-    stages {
-        stage('Preparation') {
-            steps {
-                script {
-                    currentBuild.displayName = "#${{env.BUILD_ID}}-${{ERRATA_ID}}-${{CDN}}"
-                }
-                cleanWs()
-                dir( 'entitlement-tests' )
-                {
-                    checkout scm: [
-                        $class: 'GitSCM',
-                        extensions: [[$class: 'CleanCheckout']],
-                        userRemoteConfigs: [[credentialsId: 'gerrit-ftan',url: 'ssh://ftan@code.engineering.redhat.com/entitlement-tests']],
-                        branches: [[name: 'master']]
-                    ]
-                }
-                sh 'bash -x $WORKSPACE/entitlement-tests/CCI/scripts/RHV/rhv_defaults_preparation.sh'
-            }
+    definition {
+        cps {
+            script(readFileFromWorkspace('src/jobs/RHV/default.Jenkinsfile'))
+            sandbox()
         }
     }
 }
