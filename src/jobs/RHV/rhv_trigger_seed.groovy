@@ -88,6 +88,7 @@ jobConfig.each { jobName, config ->
                 stringParam('Manifest_URL', '', 'Set ERRATA_ID or Manifest_URL for manual trigger. Manifest_URL will take affect if both are set.')
                 choiceParam('CDN', ['Stage', 'Prod'], 'Select CDN, Stage or Prod.')
                 choiceParam('Candlepin', ['Stage', 'Prod'], 'Select Candlepin, Stage or Prod.')
+            }
         }
 
         definition {
