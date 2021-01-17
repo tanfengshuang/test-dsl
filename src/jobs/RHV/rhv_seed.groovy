@@ -58,7 +58,7 @@ jobConfig.each { jobName, config ->
         }
         definition {
             cps {
-                script(readFileFromWorkspace('rhv.Jenkinsfile'))
+                script(readFileFromWorkspace('src/jobs/RHV/rhv.Jenkinsfile'))
                 sandbox()
             }
         }
