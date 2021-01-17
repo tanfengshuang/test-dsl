@@ -39,7 +39,7 @@ jobConfig.each { jobName, config ->
                                 activeMQSubscriber {
                                     name("Red Hat UMB")
                                     overrides {
-                                        topic("Consumer.rh-jenkins-ci-plugin.${{UUID.randomUUID().toString()}}.VirtualTopic.eng.errata.activity.status")
+                                        topic("Consumer.rh-jenkins-ci-plugin.${UUID.randomUUID().toString()}.VirtualTopic.eng.errata.activity.status")
                                     }
                                     selector("from = 'QE' AND to = 'REL_PREP'and product = 'RHV'")
                                     checks {
@@ -65,7 +65,7 @@ jobConfig.each { jobName, config ->
                                 activeMQSubscriber {
                                     name("Red Hat UMB")
                                     overrides {
-                                        topic("Consumer.rh-jenkins-ci-plugin.${{UUID.randomUUID().toString()}}.VirtualTopic.eng.errata.activity.status")
+                                        topic("Consumer.rh-jenkins-ci-plugin.${UUID.randomUUID().toString()}.VirtualTopic.eng.errata.activity.status")
                                     }
                                     selector("from = 'IN_PUSH' AND to = 'SHIPPED_LIVE'and product = 'RHV'")
                                     checks {
