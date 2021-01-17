@@ -4,19 +4,19 @@ import com.redhat.jenkins.plugins.ci.messaging.MessagingProviderOverrides;
 MessagingProviderOverrides po = new MessagingProviderOverrides('Consumer.rh-jenkins-ci-plugin.cb8a05ac-493c-42ee-9529-0aa113fc35ba.VirtualTopic.qe.ci.>');
 
 pipeline {
+    agent {
+        label('linchpin')
+    }
+    environment {
+        PROD_ACC = credentials('ent_prod_acc')
+        STAGE_ACC = credentials('rhv_stage_acc')
+    }
+    options {
+        timestamps()
+        ansiColor('xterm')
+        buildDiscarder(logRotator(numToKeepStr: '100', artifactNumToKeepStr: '-1'))
+    }
     stages {
-        agent {
-            label('linchpin')
-        }
-        environment {
-            PROD_ACC = credentials('ent_prod_acc')
-            STAGE_ACC = credentials('rhv_stage_acc')
-        }
-        options {
-            timestamps()
-            ansiColor('xterm')
-            buildDiscarder(logRotator(numToKeepStr: '100', artifactNumToKeepStr: '-1'))
-        }
         stage('Preparation') {
             steps {
                 script {
