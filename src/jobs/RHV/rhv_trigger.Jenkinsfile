@@ -39,7 +39,7 @@ pipeline {
                     }
                     steps {
                         script {
-                            build job: "RHVH-EntitlementCDN-Server_x86_64",
+                            build job: "try_rhv_rhvh_x86_64",
                             wait: false,
                             parameters: [
                                 string(name: 'Distro', value: readFile('rhvh_RHVH_x86_64.dir/Distro')),
@@ -56,11 +56,11 @@ pipeline {
                 }
                 stage('Server_x86_64') {
                     when {
-                        expression {{ return readFile('properties.check').contains('rhv_Server_x86_64.dir') }
+                        expression { return readFile('properties.check').contains('rhv_Server_x86_64.dir') }
                     }
                     steps {
                         script {
-                            build job: "RHV-EntitlementCDN-Server_x86_64",
+                            build job: "try_rhv_server_x86_64",
                             wait: false,
                             parameters: [
                                 string(name: 'Distro', value: readFile('rhv_Server_x86_64.dir/Distro')),
@@ -84,7 +84,7 @@ pipeline {
                     def jobName = currentBuild.fullDisplayName
                     emailext body: '''${SCRIPT, template="groovy-html.template"}''',
                     mimeType: 'text/html',
-                    subject: "[NNNNNN Test Pipeline][Jenkins] ${{jobName}}",
+                    subject: "[NNNNNN Test Pipeline][Jenkins] ${jobName}",
                     from: "jenkins@redhat.com",
                     to: "${mailRecipients}",
                     replyTo: "${mailRecipients}",

@@ -18,12 +18,6 @@ jobConfig.each { jobName, config ->
         description(config['jobDesc'])
         displayName(config['jobDisp'])
 
-        properties {
-            cachetJobProperty {
-                requiredResources(true)
-                resources(["beaker-master", "umb", "manifest-api"])
-            }
-        }
         throttleConcurrentBuilds {
             maxPerNode(3)
             maxTotal(0)
