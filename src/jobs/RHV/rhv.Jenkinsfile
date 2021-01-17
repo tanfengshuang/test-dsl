@@ -19,7 +19,7 @@ pipelines {
         stage('Preparation') {
             steps {
                 script {
-                    currentBuild.displayName = "#${{env.BUILD_ID}}-${{ERRATA_ID}}-${{CDN}}"
+                    currentBuild.displayName = "#${env.BUILD_ID}-${ERRATA_ID}-${CDN}"
                 }
                 cleanWs()
                 dir( 'entitlement-tests' )
