@@ -14,10 +14,5 @@ properties([
 ])
 
 pipeline {
-    definition {
-        cps {
-            script(readFileFromWorkspace('src/jobs/RHV/default.Jenkinsfile'))
-            sandbox()
-        }
-    }
+    load 'default.Jenkinsfile'
 }
