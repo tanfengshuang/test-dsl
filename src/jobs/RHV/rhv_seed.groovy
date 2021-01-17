@@ -2,12 +2,10 @@ def gitURL = "https://github.com/tanfengshuang/test-dsl/"
 def JenkinsfilePath = "src/jobs/RHV/"
 def jobConfig = [
         'try_rhv_server_x86_64'        : ['jobDesc': 'This job validates RHV Entitlements on RHEL Server x86_64.',
-                                      'jobDisp': 'RHV on RHEL Server x86_64',
-                                      'Jenkinsfile': JenkinsfilePath + 'rhv_server_x86_64.Jenkinsfile'
+                                      'jobDisp': 'RHV on RHEL Server x86_64'
         ],
         'try_rhv_rhvh_x86_64'	       : ['jobDesc': 'This job validates RHV Entitlements on RHVH x86_64.',
-                                      'jobDisp': 'RHV on RHVH x86_64',
-                                      'Jenkinsfile': JenkinsfilePath + 'rhvh_x86_64.Jenkinsfile'
+                                      'jobDisp': 'RHV on RHVH x86_64'
         ]
 ]
 
@@ -22,7 +20,7 @@ jobConfig.each { jobName, config ->
         properties {
             cachetJobProperty {
                 requiredResources(true)
-                resources(["beaker", "umb", "manifest-api"])
+                resources(["beaker-master", "umb", "manifest-api"])
             }
         }
         throttleConcurrentBuilds {
