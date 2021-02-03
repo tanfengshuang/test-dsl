@@ -15,23 +15,22 @@ jenkins:
   quietPeriod: 0
 
   nodes:
-    - permanent:
-        labelString: "linchpin"
-        launcher:
-          sSHLauncher:
-            credentialsId: "ent-slave"
-            host: "10.0.149.246"
-            launchTimeoutSeconds: 210
-            maxNumRetries: 10
-            port: 22
-            retryWaitTime: 15
-            sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
-        name: "ent-jslave-10"
-        nodeDescription: "Permanent MPENT_CI jenkins slave #10"
-        numExecutors: 10
-        remoteFS: "/home/jenkins"
-        retentionStrategy: "always"
-
+  - permanent:
+      labelString: "linchpin"
+      launcher:
+        sSHLauncher:
+          credentialsId: "ent-slave"
+          host: "10.0.149.246"
+          launchTimeoutSeconds: 210
+          maxNumRetries: 10
+          port: 22
+          retryWaitTime: 15
+          sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
+      name: "ent-jslave-10"
+      nodeDescription: "Permanent MPENT_CI jenkins slave #10"
+      numExecutors: 10
+      remoteFS: "/home/jenkins"
+      retentionStrategy: "always"
 
   # Default LDAP configuration
   securityRealm:
@@ -111,5 +110,5 @@ configuration-as-code:
   deprecated: warn
 
 jobs:
-  - url: https://github.com/tanfengshuang/test-dsl/blob/master/src/jobs/RHV/rhv_seed.groovy
+  - url: https://raw.githubusercontent.com/tanfengshuang/test-dsl/blob/master/src/jobs/RHV/rhv_seed.groovy
 
