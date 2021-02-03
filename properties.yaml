@@ -1,7 +1,13 @@
 # Publicly cloneable GIT url of the declaration (this) repository.
-CASC_DECLARATION_REPO: ''
+CASC_DECLARATION_REPO: 'git@gitlab.cee.redhat.com:ccit/jenkins-csb.git'
 # Name of the JCasC YAML file. Expected to be in the same directory as this file.
 CASC_REPO_FILE: 'casc.yaml'
 # Name of the plugins.txt file. Expected to be in the same directory as this file.
 CASC_REPO_PLUGINS: 'plugins.txt'
+# Name of the OpenShift project the deployment is in (TENANT_NAME-PROJECT_NAME.cloud.paas.psi.redhat.com)
+OS_PROJECT_NAME: 'jenkins-csb-mpentqe' # Prefixed by `jenkins-csb-`
+# Name of the OpenShift tenant the deployment is in (TENANT_NAME-PROJECT_NAME.cloud.paas.psi.redhat.com)
+OS_TENANT_NAME: 'main'
+# Version of the container to use. Note there is only handful of containers supported.
+JENKINS_CSB_VERSION: "2-235"
 
