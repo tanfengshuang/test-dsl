@@ -3,11 +3,11 @@ credentials:
     domainCredentials:
     - credentials:
       - usernamePassword:
-        scope: GLOBAL
-        id: "ent-slave"
-        description: "Credential for entitlement slaves"
-        username: root
-        password: ${secret/ent_slave}
+          scope: GLOBAL
+          id: "ent-slave"
+          description: "Credential for entitlement slaves"
+          username: root
+          password: ${secret/ent_slave}
 
 jenkins:
   systemMessage: "Controlled by Configuration as Code. Do not install plugins manually, read: https://docs.engineering.redhat.com/pages/viewpage.action?pageId=93546799"
