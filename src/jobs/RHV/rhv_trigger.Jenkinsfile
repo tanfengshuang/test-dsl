@@ -16,7 +16,12 @@ pipeline {
         stage('Preparation') {
             steps {
                 script {
-                    currentBuild.displayName = "${CI_MESSAGE.errata_id}-${CI_MESSAGE.synopsis}"
+                    if (env.JOB_NAME.contains("rhv_manual_trigger")){
+                        currentBuild.displayName = "#${env.BUILD_ID}-${evn.ERRATA_ID}-${env.CDN}"
+                    }
+                    else{
+                        currentBuild.displayName = "#${env.BUILD_ID}-${env.CI_MESSAGE.errata_id}-${env.CI_MESSAGE.synopsis}"
+                    }
                 }
                 cleanWs()
                 dir( 'entitlement-tests' )
@@ -28,7 +33,17 @@ pipeline {
                         branches: [[name: 'master']]
                     ]
                 }
-                sh 'bash -x $WORKSPACE/entitlement-tests/CCI/scripts/RHV/rhv_umb_trigger_stage_preparation.sh'
+                script {
+                    if (env.JOB_NAME.contains("rhv_manual_trigger")){
+                        sh 'bash -x $WORKSPACE/entitlement-tests/CCI/scripts/RHV/rhv_manual_trigger_preparation.sh'
+                    }
+                    else if (env.JOB_NAME.contains("try_rhv_prod_trigger")){
+                        sh 'bash -x $WORKSPACE/entitlement-tests/CCI/scripts/RHV/rhv_umb_trigger_prod_preparation.sh'
+                    }
+                    else {
+                        sh 'bash -x $WORKSPACE/entitlement-tests/CCI/scripts/RHV/rhv_umb_trigger_prod_preparation.sh'
+                    }
+                }
             }
         }
         stage('Build Downstream Jobs') {
@@ -78,6 +93,9 @@ pipeline {
             }
         }
         stage('Email') {
+            when {
+                expression { !env.JOB_NAME.contains('rhv_manual_trigger') }
+            }
             steps {
                 script {
                     def mailRecipients = 'ftan@redhat.com'

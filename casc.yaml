@@ -1,0 +1,115 @@
+credentials:
+  system:
+    domainCredentials:
+    - credentials:
+      - usernamePassword:
+        scope: GLOBAL
+        id: "ent-slave"
+        description: "Credential for entitlement slaves"
+        username: root
+        password: ${secret/ent_slave}
+
+jenkins:
+  systemMessage: "Controlled by Configuration as Code. Do not install plugins manually, read: https://docs.engineering.redhat.com/pages/viewpage.action?pageId=93546799"
+  numExecutors: 1
+  quietPeriod: 0
+
+  nodes:
+    - permanent:
+        labelString: "linchpin"
+        launcher:
+          sSHLauncher:
+            credentialsId: "ent-slave"
+            host: "10.0.149.246"
+            launchTimeoutSeconds: 210
+            maxNumRetries: 10
+            port: 22
+            retryWaitTime: 15
+            sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
+        name: "ent-jslave-10"
+        nodeDescription: "Permanent MPENT_CI jenkins slave #10"
+        numExecutors: 10
+        remoteFS: "/home/jenkins"
+        retentionStrategy: "always"
+
+
+  # Default LDAP configuration
+  securityRealm:
+    ldap:
+      cache:
+        size: 100
+        ttl: 10
+      configurations:
+        - server: ldaps://ldap.corp.redhat.com
+          rootDN: dc=redhat,dc=com
+          displayNameAttributeName: cn
+          inhibitInferRootDN: false
+          userSearch: uid={0}
+          groupSearchBase: ou=adhoc,ou=managedGroups
+          groupSearchFilter: (& (cn={0}) (objectclass=GroupOfUniqueNames))
+      userIdStrategy: CaseInsensitive
+      groupIdStrategy: CaseInsensitive
+      disableRolePrefixing: true
+
+  authorizationStrategy:
+    roleBased:
+      roles:
+        global:
+          - name: "admin"
+            description: "Jenkins administrators"
+            permissions:
+              - "Overall/Administer"
+            assignments:
+              - "cci-octopus" # Instance telemetry collection
+              - "ci-support" # Access for the support team
+              - "sysops" # Access for the support team
+              - "ccit-test" # OpenShift automation account
+              - "ccit" # CCIT team
+              - "entitlement-qe"
+          - name: "anonymous"
+            description: "Anonymous users"
+            permissions:
+              - "Overall/Read"
+              - "Job/Read"
+            assignments:
+              - "anonymous"
+          - name: "readonly"
+            description: "Read-only users"
+            permissions:
+              - "Overall/Read"
+              - "Job/Read"
+              - "Job/ExtendedRead"
+              - "View/Read"
+            assignments:
+              - "authenticated"
+
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: true
+  agentProtocols:
+  - "JNLP4-connect"
+  - "Ping"
+
+  updateCenter:
+    sites:
+    - id: "default"
+      url: "https://2-235-jenkins-csb-uc.cloud.paas.psi.redhat.com/update-center.json"
+
+security:
+  sSHD:
+    port: 50022
+  apiToken:
+    creationOfLegacyTokenEnabled: false
+    tokenGenerationOnCreationEnabled: false
+    usageStatisticsEnabled: true
+
+unclassified:
+  shell:
+    shell: "bash"
+
+configuration-as-code:
+  deprecated: warn
+
+jobs:
+  - url: https://github.com/tanfengshuang/test-dsl/blob/master/src/jobs/RHV/rhv_seed.groovy
+

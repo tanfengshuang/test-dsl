@@ -1,0 +1,19 @@
+{
+  "rp_preproc" : {
+    "service_url": "http://reportportal-mp-entitlement-qe-preproc.cloud.paas.psi.redhat.com/",
+    "payload_dir": "reportportal/"
+  },
+  "reportportal": {
+    "host_url": "https://reportportal-mp-entitlement-qe.cloud.paas.psi.redhat.com/",
+    "api_token": "4671cb37-d468-4785-829c-3c0184341efd",
+    "project": "ANSIBLE",
+    "merge_launches": false,
+    "simple_xml": false,
+    "auto_dashboard": false,
+    "launch": {
+      "name": "NAME",
+      "description": "ERRATA: ERRATA_ID,  PIDs: _PID,  Jenkins Job: BUILD_URL,\nPolarion Run: Polarion_URL.",
+      "tags": ["TAG"]
+    }
+  }
+}
